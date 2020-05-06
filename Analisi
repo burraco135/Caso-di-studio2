@@ -1,0 +1,71 @@
+Analisi (* a scelta)
+Utenti: creatore, utilizzatore
+Azioni: cercare risorse didattiche, valutare risorse didattiche, scaricare risorse didattiche
+*Risorse didattiche: titolo, livello educativo per cui è destinata, disciplina, autore, parole chiave, valutazione dell'utenza,
+			tipologia (video lezioni, multimedia, testi, giochi, ecc.)
+*Creatore: nominativo, disciplina in cui sono specializzati, livello educativo per cui creano
+*Utilizzatore: nominativo, disciplina in cui sono specializzati, livello educativo per cui usano
+ - Registrare le abitudini degli Utilizzatori e dei Creatori
+ - File risorse
+ - File creatore 
+ - File utilizzatore
+
+1) Aggiunta, modifica, cancellazione dell'elenco delle risorse e degli utenti
+2) Visualizzazione delle risorse più frequentemente scaricate (Top 5)
+3) Suggerimento Risorsa Didattica
+4) Statistiche creatore
+5) Funzionalità di Ordinamento
+6) Gestione funzionalità tramite menu utente
+
+PRIMA FASE: chiarifica del problema
+Il programma deve gestire un sistema che si occupa di risorse didattiche.
+Ogni risorsa viene creata da un Creatore e viene visualizzata da un Utente.
+Solo il Creatore può creare, modificare ed eliminare le risorse mente l'Utente
+può solamente cercarle, visualizzarle, scaricarle e valutarle.
+Le risorse sono formate da: titolo (stringa), livello educativo (typedef enum (3)),  disciplina (type def = italiano,
+storia, matematica, geografia, arte, inglese), autore (Creatore), parole chiave[hashtag] (materia+livello), valutazione (5/5).
+Supponiamo di conoscere il numero totale delle risorse.
+Il creatore e l'utente contengono i seguenti dati: nominativo (nome+cognome), disciplina, livello creazione/ricerca.
+I dati dei creatori, degli utenti e delle risorse sono salvati in file distinti su cui vengono effettuate le seguenti
+operazioni: aggiunta risorse, modifica risorse e cancellazione risorse.
+Inoltre, il programma deve far visualizzare le risorse più frequentemente scaricate, suggerire agli utenti risorse didattiche che potrebbero gradire, far visualizzare ad ogni creatore le statistiche delle risorse create, mostrare all'utente le risorse, gli utenti e i creatori secondo un criterio.
+Il programma comunica con l'utente attraverso un menù a scelta che cambia da utente a creatore.
+
+MENU (interazione con utente)
+menù iniziale
+	sei un utente?
+	accesso utente -> 1
+	> log in utente
+		(1) -> menu utente
+			[1]ricerca (e informazioni relative alla risorsa)	
+        [1.1)Suggerimento (per parole chiave)	
+			[2]statistiche (risorse popolari)			
+			[3]Ordinamento (per lvl edu)      
+      
+	o sei un creatore?
+	accesso creatore -> 2
+	> log in creatore
+		(2) -> menu creatore
+      [1]gestione risorse (sottomenu)
+		  	  [1) aggiornare
+			    [2) modificare
+			    [3) eliminare
+			[2]statistiche
+			[3]ordinamento
+}
+
+VARIABILI DI INPUT
+Nome utente (Utente, Creatore) = stringa case sensitive
+Password (Utente, Creatore) = procedura password
+Indice (Menù iniz., Menù utente, Menù creatore) = intero 1-4
+Parola chiave (Menù utente>ricerca) = intero
+
+VARIABILI DI OUTPUT
+Visualizzazione di tutto ciò che è richiesto da: Utente/Creatore
+
+
+
+
+
+
+
