@@ -10,6 +10,7 @@ void menu_amministratore(int opzione);
 
 int main(void) {
 	unsigned int indice = 0;
+	puts("Ciao!");
 	menu_iniziale(indice);
 	puts("> Programma chiuso correttamente! <");
   return 0;
