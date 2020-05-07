@@ -1,11 +1,12 @@
 #include "menu.h"
+#include "gestione.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 void menu_iniziale(int opzione) { 
 	int status = 0; // Controlla l'input
 
-	puts("\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	puts("\n\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	puts("\t|                                                      |");
 	puts("\t| Benvenuto nel programma 'Risorse Didattiche Online'! |");
 	puts("\t|                                                      |");
@@ -19,25 +20,25 @@ void menu_iniziale(int opzione) {
 		case 1:
 			puts("> Caricamento menù utilizzatore...");
 			menu_utilizzatore(opzione);
-			status = 1;
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
 			break;
 		case 2:
 			puts("> Caricamento menù creatore...");
 			menu_creatore(opzione);
-			status = 1;
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
 			break;
 		case 3:
 		 	puts("> Caricamento menù amministratore...");
 			menu_amministratore(opzione);
-		 	status = 1;
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
 			break;
 		case 4:
 			puts("> Uscita in corso...");
-			status = 1;
+			status = 1; // return 0; -> FINE
 			break;
     default:
       puts("Valore inserito non valido! Inserisci di nuovo l'opzione: ");
-			getchar();	
+			getchar();
 		} // Fine switch
 	} // Fine while
 } // Fine menu_iniziale
@@ -61,15 +62,12 @@ void menu_utilizzatore(int opzione) {
 			switch(opzione) {
 				case 1:
 					puts("> Ricerca risorse didattiche...");
-					status = 1;
 					break;
 				case 2:
 					puts("> Lettura statistiche...");
-					status = 1;
 					break;
 				case 3:
 					puts("> Ordinamento risorse...");
-					status = 1;
 					break;
 				case 4:
 					puts("> Disconnessione account in corso...");
@@ -95,15 +93,12 @@ void menu_creatore(int opzione) {
 			switch (opzione) {
 				case 1:
 					puts("> Gestione risorse...");
-					status = 1;
 					break;
 				case 2:
 					puts("> Lettura statistiche...");
-					status = 1;
 					break;
 				case 3:
 					puts("> Ordinamento risorse...");
-					status = 1;
 					break;
 				case 4:
 					puts("> Disconnessione in corso...");
@@ -118,6 +113,7 @@ void menu_creatore(int opzione) {
 } // Fine menu_creatore
 
 void menu_amministratore(int opzione) {
+	FILE *fUtente;
 	int status = 0, accesso = 0;
 	char nome_utente[10] = "";
 	int password = 0;
@@ -129,15 +125,13 @@ void menu_amministratore(int opzione) {
 			switch(opzione) {
 				case 1:
 					puts("> Elimina utente...");
-					status = 1;
 					break;
 				case 2:
 					puts("> Modifica utente...");
-					status = 1;
 					break;
 				case 3:
 					puts("> Crea utente...");
-					status = 1;
+					CreaFileUtente()
 					break;
 				case 4:
 				 	puts("> Disconnessione in corso...");
