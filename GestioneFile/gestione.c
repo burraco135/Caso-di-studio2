@@ -18,30 +18,18 @@ typedef struct {
 } utente_t;
 
 void CreaFileUtente(FILE *creaFileUtente) {
-	int result = 0;
-	FILE *creaFileU; // Puntatore al file Utente
 
-	if ((creaFileU = fopen("FileUtente.txt", "w")) == NULL) {
-		puts("!! File corrotto o non esistente.");
-	  rewind(creaFileUtente); // Puntatore al primo elemento
-		fprintf(creaFileU, "%-16s%-21s%-11s%-13s%\n", 
-		"Nome", "Cognome", "Disciplina", "Livello");
+	if ((creaFileUtente = fopen("FileUtente.txt", "r")) == NULL) {
+		puts("File corrotto o inesistente");
+	} else {
+		puts("File aperto.");
+	}
 
-		while (!feof(creaFileUtente)) {
-			utente_t utente = {"", "", 0, 0};
-			result = fread(&utente, sizeof(utente_t), 1, creaFileUtente);
-
-			if (result != 0 && utente.disciplina != 0 && utente.livello != 0) {
-				fprintf(creaFileU, "%-16s%-21s%-11s%-13s%\n", utente.nome, utente.cognome, utente.disciplina, utente.livello);
-			} // Fine if
-		} // Fine while
-		fclose(creaFileU);
-	} // Fine if
+	if (!fclose(creaFileUtente)) {
+		puts("File chiuso.");
+	}
 }
-
-
-
-
+	
 
 
 

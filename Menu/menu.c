@@ -131,7 +131,7 @@ void menu_amministratore(int opzione) {
 					break;
 				case 3:
 					puts("> Crea utente...");
-					CreaFileUtente()
+					CreaFileUtente(fUtente);
 					break;
 				case 4:
 				 	puts("> Disconnessione in corso...");
