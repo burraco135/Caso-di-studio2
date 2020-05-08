@@ -228,7 +228,7 @@ void CreaRisorse(FILE *fileRisorse){
 }
 
 void EliminaUtente(FILE *fileUtente) {
-	if ((fileUtente = fopen("FileUtente.dat", "rb")) == NULL) {
+	if ((fileUtente = fopen("FileUtente.dat", "rb+")) == NULL) {
 		puts("Meh mo basta");
 	} else {
 		puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
@@ -245,11 +245,8 @@ void EliminaUtente(FILE *fileUtente) {
 		scanf("%d", &elimina);
 
       fseek(fileUtente, (elimina - 1) * sizeof(utente_t), SEEK_SET); // i = 0
-      utente_t utente;
-    	fread(&utente,sizeof(utente_t),1,fileUtente);
+      utente_t utente_vuoto = {0, "", "", 0, 0};
     	
-    		fseek(fileUtente,(elimina - 1)*sizeof(utente_t), SEEK_SET);
-    		utente_t utente_vuoto = {0, "", "", 0, 0};
     		fwrite(&utente_vuoto,sizeof(utente_t),1,fileUtente);
 				puts("Sono qui");
 		fclose(fileUtente);
