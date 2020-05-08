@@ -246,7 +246,7 @@ void EliminaUtente(FILE *fileUtente) {
 
       fseek(fileUtente, (elimina - 1) * sizeof(utente_t), SEEK_SET); // i = 0
       utente_t utente_vuoto = {0, "", "", 0, 0};
-    	
+    	// FIXME controllo input
     		fwrite(&utente_vuoto,sizeof(utente_t),1,fileUtente);
 				puts("Sono qui");
 		fclose(fileUtente);
