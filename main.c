@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "gestione.h"
 
 //prototipi funzioni
 //int accedi(char nome[], int password);
