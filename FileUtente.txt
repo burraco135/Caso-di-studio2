@@ -1,4 +1,0 @@
-nome1 cognome1 1 1
-nome2 cognome2 2 2
-nome3 cognome3 3 3
-nome4 cognome4 4 4

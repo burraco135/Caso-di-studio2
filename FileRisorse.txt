@@ -1,7 +1,0 @@
-titolo1 1 1 autore1 1
-titolo2 2 2 autore2 2
-titolo3 3 3 autore3 3
-titolo4 4 4 autore4 4
-titolo10 10 10 autore10 10
-titolo11 11 11 autore11 11
-titolo12 12 12 autore12 12
