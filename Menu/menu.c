@@ -189,35 +189,40 @@ void menu_amministratore(int opzione) {
 } // Fine menu_amministratore
 
 void CreaUtente(FILE *fileUtente){
-  utente_t utente = {0, "", "", 0, 0};
-  if ((fileUtente = fopen("FileUtente.dat","ab"))==NULL) {
+  utente_t utente = {0, "", "", 0, 0}; // Struct temporanea per l'input
+	
+  if ((fileUtente = fopen("FileUtente.csv","rb+")) == NULL) {
     puts("File corrotto o inesistente.");  
-  } else {
-		puts("Inserisci: Nome, Cognome, Disciplina e Livello");
+  } else {        
+		puts("Inserisci: Codice, Nome, Cognome, Disciplina e Livello");
     puts("Premi CTRL-Z per terminare.");
+		printf("%s", "? ");
+		scanf("%d %19s %19s %d %d", &utente.codice, utente.nome, utente.cognome, &utente.disciplina, &utente.livello);
+      
 		while(!feof(stdin)){
+			fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
+			fwrite(&utente, sizeof(utente_t), 1, fileUtente);
 			printf("%s", "? ");
-			fscanf(stdin,"%19s%19s%d%d", utente.nome, utente.cognome, &utente.disciplina, &utente.livello);
-			utente.codice++;     
-      fwrite(&utente, sizeof(utente_t), 1, fileUtente);
+			scanf("%d %19s %19s %d %d", &utente.codice, utente.nome, utente.cognome, &utente.disciplina, &utente.livello);
     } 
-  fclose(fileUtente);
+  
   }
 
 	// stampa
-	if ((fileUtente = fopen("FileUtente.dat", "rb")) == NULL) {
+	if ((fileUtente = fopen("FileUtente.csv", "rb")) == NULL) {
 		puts("File corrotto o inesistente");
 	} else {
-		puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
+		rewind(fileUtente);
+    puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
+    
 		while (!feof(fileUtente)) {
-			utente_t utente = {0, "", "", 0, 0};
-			int result = fread(&utente, sizeof(utente_t), 1, fileUtente);
-
-			if (result != 0 ) {
-				printf("%d\t%s\t%s\t%d\t%d\n", utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
+			fread(&utente, sizeof(utente_t), 1, fileUtente);
+			if (!feof(fileUtente)) {
+				printf("\n%d\t%s\t%s\t%d\t%d", utente.codice, utente.nome, utente.cognome, utente.disciplina, 
+        utente.livello);
 			}
 		}
-		fclose(fileUtente);
+	fclose(fileUtente);
 	}
 }
 
@@ -243,94 +248,80 @@ void CreaRisorse(FILE *fileRisorse){
 void EliminaUtente(FILE *fileUtente) {
 	utente_t utente;
   utente_t utenteVuoto = {0, "", "", 0, 0};
-	int result = 0, codice = 0; //indica il codice dell'utente da eliminare
+	int codice = 0; //indica il codice dell'utente da eliminare
 
-	if ((fileUtente = fopen("FileUtente.dat", "rb+")) == NULL) {
+	if ((fileUtente = fopen("FileUtente.csv", "rb+")) == NULL) {
 		puts("File corrotto o inesistente");
 	} else {
-		puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
+		do {
+			printf("Inserisci il codice da cancellare: ");
+			scanf("%d", &utente.codice);
 
-		while (!feof(fileUtente)) {
-			utente_t utente = {0, "", "", 0, 0};
-
-			result = fread(&utente, sizeof(utente_t), 1, fileUtente);
-
-			if (result != 0 && utente.codice != 0) {
-				printf("%d\t%s\t%s\t%d\t%d\n", utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
-			} // Stampa il file
-		}	// Fine while		
-       
-    do {
-	  	puts("\nScegli l'utente da eliminare: (premi -1 per terminare) ");
-		  scanf("%d", &codice);
-
-      if(codice != -1){
-        fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);
-        fread(&utente, sizeof(utente_t), 1 , fileUtente); // i = 0
-
-        if( !feof(fileUtente) && (utente.codice != 0) ){
-          codice = utente.codice;
-          utente = utenteVuoto;
-          fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);
-          fwrite(&utente, sizeof(utente_t), 1, fileUtente);
-          puts("record cancellato ehehehehe");          
-        } else {
-          puts("codice non trovato");
-        } // Fine if
-      } // Fine if
-    } while(codice != -1);
-
-    puts("Premi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");
+			if (!feof(stdin)) {
+				fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
+				fread(&utente, sizeof(utente_t), 1, fileUtente);
+        
+				if (!feof(fileUtente) && utente.codice != 0) {								
+					fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
+					fwrite(&utenteVuoto, sizeof(utente), 1, fileUtente);
+					puts("Utente cancellato");
+          
+				} else {
+					puts("Codice non trovato");
+				}
+			} 
+		} while (!feof(stdin));
+    //puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");
 
 		fclose(fileUtente);  
   } // Fine if
 }
 
 void ModificaUtente(FILE *fileUtente) {
+	utente_t utente;
   if ((fileUtente = fopen("FileUtente.dat", "rb+")) == NULL) {
 		puts("File corrotto o inesistente");
 	} else {
-      puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
+    puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
       
-      while (!feof(fileUtente)) {
-        utente_t utente = {0, "", "", 0, 0};
-        int result = fread(&utente, sizeof(utente_t), 1, fileUtente);
-
-        if (result != 0 && utente.codice != 0) {
-          printf("%d\t%s\t%s\t%d\t%d\n", utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
-        } // Stampa il file
-      }	// Fine while	
-
-      printf("Inserisci il codice dell'utente da modificare: ");
-      unsigned int codice = 0;
+    while (!feof(fileUtente)) {
       utente_t utente = {0, "", "", 0, 0};
+      int result = fread(&utente, sizeof(utente_t), 1, fileUtente);
 
-      scanf("%d", &codice);
+      if (result != 0 && utente.codice != 0) {
+        printf("%d\t%s\t%s\t%d\t%d\n", utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
+      } // Stampa il file
+    }	// Fine while	
 
-      fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);  
-      fread(&utente, sizeof(utente_t), 1, fileUtente);
+    puts("Inserisci il codice dell'utente da modificare: ");
+    unsigned int codice = 0;
+    //utente_t utente = {0, "", "", 0, 0};
 
-      if(utente.codice == 0) { //esiste il codice ricercato?
-        printf("Codice utente n.%d non trovato.", codice);
-      }
-      else { //modifica altrimenti
-        printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
+    scanf("%d", &codice);
 
-        puts("Ora inserisci i nuovi valori dell'utente scelto.");
-        puts("\tNome   --> " );
-        scanf("%s", utente.nome);
-        puts("\tCognome   --> " );
-        scanf("%s", utente.cognome);
-        puts("\tDisciplina   --> " );
-        scanf("%d", &utente.disciplina);
-        puts("\tLivello Educativo   --> " );
-        scanf("%d", &utente.livello);
+    fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);  
+    fread(&utente, sizeof(utente_t), 1, fileUtente);
 
-        printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
+    if(utente.codice == 0) { //esiste il codice ricercato?
+      printf("Codice utente n.%d non trovato.", codice);
+    } else { //modifica altrimenti
+      printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
 
-        fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);
-        fwrite(&utente, sizeof(utente_t), 1, fileUtente);
-      }
-			fclose(fileUtente);
+      puts("Ora inserisci i nuovi valori dell'utente scelto.");
+      puts("\tNome   --> " );
+      scanf("%s", utente.nome);
+      puts("\tCognome   --> " );
+      scanf("%s", utente.cognome);
+      puts("\tDisciplina   --> " );
+      scanf("%d", &utente.disciplina);
+      puts("\tLivello Educativo   --> " );
+      scanf("%d", &utente.livello);
+
+      printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
+
+      fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);
+      fwrite(&utente, sizeof(utente_t), 1, fileUtente);
+    }
+		fclose(fileUtente);
   }
 }
