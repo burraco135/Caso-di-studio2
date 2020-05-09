@@ -37,7 +37,7 @@ void menu_iniziale(int opzione) {
 	puts("\t+ Benvenuto nel programma 'Risorse Didattiche Online'! +");
 	puts("\t+                                                      +");
 	puts("\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-  puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
+  puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma\n");
 	
 	while(status != 1) { 	// Aspetta che status diventi 1
 	printf("--> ");
@@ -45,22 +45,22 @@ void menu_iniziale(int opzione) {
 
 		switch(opzione) {	// Scelte menù iniziale
 		case 1:
-			puts("> Caricamento menù utilizzatore...");
+			puts("\n> Caricamento menù utilizzatore...");
 			menu_utilizzatore(opzione);
-			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma\n");
 			break;
 		case 2:
-			puts("> Caricamento menù creatore...");
+			puts("\n> Caricamento menù creatore...");
 			menu_creatore(opzione);
-			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma\n");
 			break;
 		case 3:
-		 	puts("> Caricamento menù amministratore...");
+		 	puts("\n> Caricamento menù amministratore...");
 			menu_amministratore(opzione);
-			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma");
+			puts("\nPremi [1] se se sei un utilizzatore\nPremi [2] se sei un Creatore\nPremi [3] se sei un amministratore\nPremi [4] per uscire dal programma\n");
 			break;
 		case 4:
-			puts("> Uscita in corso...");
+			puts("\n> Uscita in corso...");
 			status = 1; // return 0; -> FINE
 			break;
     default:
@@ -82,7 +82,7 @@ void menu_utilizzatore(int opzione) {
 	scanf("%d", &password);
 	//accesso = accedi(nome_utente, password); // Controlla i dati di accesso
 
-	puts("\nPremi [1] per cercare risorse didattiche\nPremi [2] per leggere le statistiche\nPremi [3] per ordinare le risorse\nPremi [4] per disconnetterti");
+	puts("\nPremi [1] per cercare risorse didattiche\nPremi [2] per leggere le statistiche\nPremi [3] per ordinare le risorse\nPremi [4] per disconnetterti\n");
 	if (accesso == 0) {	//FIXME 
 		while (status != 1) {
 			printf("--> ");
@@ -154,174 +154,36 @@ void menu_amministratore(int opzione) {
 	char nome_utente[10] = "";
 	int password = 0;
 
-	puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");
+	puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti\n");
 	if (accesso == 0) {
 		while (status != 1) {
 			printf("--> ");
 			scanf("%d", &opzione);
 			switch(opzione) {
 				case 1:
-					puts("> Elimina utente...");
+					puts("\n> Elimina utente...");
 					EliminaUtente(ptrUtente);
-					puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");    
+					puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti\n");    
 					// TODO
 					break;
 				case 2:
-					puts("> Modifica utente...");
+					puts("\n> Modifica utente...");
 					ModificaUtente(ptrUtente);
-					puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");    
+					puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti\n");    
 					break;
 				case 3:
-					puts("> Crea utente...");
+					puts("\n> Crea utente...");
 					CreaUtente(ptrUtente);    
-          puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");       				
+          puts("\n\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti\n");       				
 					break;
 				case 4:
-				 	puts("> Disconnessione in corso...");
+				 	puts("\n> Disconnessione in corso...");
 					 status = 1;
 					 break;
 				default:
-					puts(" !-> Valore inserito non valido! Inserisci di nuovo l'opzione: ");
+					puts("\n!-> Valore inserito non valido! Inserisci di nuovo l'opzione: ");
 					getchar();		
 			}// Fine switch
 		} // Fine while
 	} // Fine if
 } // Fine menu_amministratore
-
-void CreaUtente(FILE *fileUtente){
-  utente_t utente = {0, "", "", 0, 0}; // Struct temporanea per l'input
-	
-  if ((fileUtente = fopen("FileUtente.csv","rb+")) == NULL) {
-    puts("File corrotto o inesistente.");  
-  } else {        
-		puts("Inserisci: Codice, Nome, Cognome, Disciplina e Livello");
-    puts("Premi CTRL-Z per terminare.");
-		printf("%s", "? ");
-		scanf("%d %19s %19s %d %d", &utente.codice, utente.nome, utente.cognome, &utente.disciplina, &utente.livello);
-      
-		while(!feof(stdin)){
-			fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
-			fwrite(&utente, sizeof(utente_t), 1, fileUtente);
-			printf("%s", "? ");
-			scanf("%d %19s %19s %d %d", &utente.codice, utente.nome, utente.cognome, &utente.disciplina, &utente.livello);
-    } 
-  
-  }
-
-	// stampa
-	if ((fileUtente = fopen("FileUtente.csv", "rb")) == NULL) {
-		puts("File corrotto o inesistente");
-	} else {
-		rewind(fileUtente);
-    puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
-    
-		while (!feof(fileUtente)) {
-			fread(&utente, sizeof(utente_t), 1, fileUtente);
-			if (!feof(fileUtente)) {
-				printf("\n%d\t%s\t%s\t%d\t%d", utente.codice, utente.nome, utente.cognome, utente.disciplina, 
-        utente.livello);
-			}
-		}
-	fclose(fileUtente);
-	}
-}
-
-void CreaRisorse(FILE *fileRisorse){
-  risorsa_t risorsa = {"", 0, 0, "", "", 0, 0};
-  if ((fileRisorse = fopen("FileRisorse.dat", "rb+")) == NULL) {
-    puts("File corrotto o inesistente.");  
-  } else {
-    puts("Inserisci: Titolo, livello educativo, disciplina,\nautore, tipologia.");
-    puts("Premi CTRL-Z per terminare.");
-		printf("%s", "? ");
-    scanf("%s %d %d %s %d", risorsa.titolo, &risorsa.livello, &risorsa.disciplina, risorsa.autore, &risorsa.tipologia);
-    
-		while (!feof(stdin)){   
-      fprintf(fileRisorse,"%s %d %d %s %d\n", risorsa.titolo, risorsa.livello, risorsa.disciplina, risorsa.autore, risorsa.tipologia);
-      printf("%s", "? ");
-      scanf("%s %d %d %s %d", risorsa.titolo, &risorsa.livello, &risorsa.disciplina, risorsa.autore, &risorsa.tipologia);
-    } // Fine while
-  fclose(fileRisorse);
-  } // Fine if
-}
-
-void EliminaUtente(FILE *fileUtente) {
-	utente_t utente;
-  utente_t utenteVuoto = {0, "", "", 0, 0};
-	int codice = 0; //indica il codice dell'utente da eliminare
-
-	if ((fileUtente = fopen("FileUtente.csv", "rb+")) == NULL) {
-		puts("File corrotto o inesistente");
-	} else {
-		do {
-			printf("Inserisci il codice da cancellare: ");
-			scanf("%d", &utente.codice);
-
-			if (!feof(stdin)) {
-				fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
-				fread(&utente, sizeof(utente_t), 1, fileUtente);
-        
-				if (!feof(fileUtente) && utente.codice != 0) {								
-					fseek(fileUtente, (utente.codice - 1) * sizeof(utente_t), SEEK_SET);
-					fwrite(&utenteVuoto, sizeof(utente), 1, fileUtente);
-					puts("Utente cancellato");
-          
-				} else {
-					puts("Codice non trovato");
-				}
-			} 
-		} while (!feof(stdin));
-    //puts("\nPremi [1] per eliminare un utente\nPremi [2] per modificare un utente\nPremi [3] per creare un utente\nPremi [4] per disconnetterti");
-
-		fclose(fileUtente);  
-  } // Fine if
-}
-
-void ModificaUtente(FILE *fileUtente) {
-	utente_t utente;
-  if ((fileUtente = fopen("FileUtente.dat", "rb+")) == NULL) {
-		puts("File corrotto o inesistente");
-	} else {
-    puts("\nCodice\tNome\tCognome\tDisciplina\tLivello");
-      
-    while (!feof(fileUtente)) {
-      utente_t utente = {0, "", "", 0, 0};
-      int result = fread(&utente, sizeof(utente_t), 1, fileUtente);
-
-      if (result != 0 && utente.codice != 0) {
-        printf("%d\t%s\t%s\t%d\t%d\n", utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
-      } // Stampa il file
-    }	// Fine while	
-
-    puts("Inserisci il codice dell'utente da modificare: ");
-    unsigned int codice = 0;
-    //utente_t utente = {0, "", "", 0, 0};
-
-    scanf("%d", &codice);
-
-    fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);  
-    fread(&utente, sizeof(utente_t), 1, fileUtente);
-
-    if(utente.codice == 0) { //esiste il codice ricercato?
-      printf("Codice utente n.%d non trovato.", codice);
-    } else { //modifica altrimenti
-      printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
-
-      puts("Ora inserisci i nuovi valori dell'utente scelto.");
-      puts("\tNome   --> " );
-      scanf("%s", utente.nome);
-      puts("\tCognome   --> " );
-      scanf("%s", utente.cognome);
-      puts("\tDisciplina   --> " );
-      scanf("%d", &utente.disciplina);
-      puts("\tLivello Educativo   --> " );
-      scanf("%d", &utente.livello);
-
-      printf("%-d%-s%-s%-d%-d\n\n",utente.codice, utente.nome, utente.cognome, utente.disciplina, utente.livello);
-
-      fseek(fileUtente, (codice - 1) * sizeof(utente_t), SEEK_SET);
-      fwrite(&utente, sizeof(utente_t), 1, fileUtente);
-    }
-		fclose(fileUtente);
-  }
-}

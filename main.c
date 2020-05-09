@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "menu.h"
 
+void menu_iniziale(int opzione);
+
 //prototipi funzioni
 //int accedi(char nome[], int password);
 
